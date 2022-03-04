@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import "./App.css";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
+import Main from "./Components/Main";
+import { requestData } from "./state/action-creators/action";
+import {useDispatch } from 'react-redux';
+
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(()=>{
+       const ans = async ()=>{
+            const data = await fetch(`https://run.mocky.io/v3/${process.env.REACT_APP_API_KEY}`);
+              const res   = await data.json();
+              console.log(res);
+            dispatch(requestData(res))
+          }
+          ans();
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Main/>
+      <Footer />
     </div>
   );
 }
