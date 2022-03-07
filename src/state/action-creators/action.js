@@ -1,8 +1,29 @@
-import Data from '../constants';
+import Data from "../constants";
 
-export const requestData =(data)=> async(dispatch)=>{
+export const requestData = (data) => async (dispatch) => {
+  dispatch({
+    type: Data.LOAD,
+    payload: data,
+    
+  });
+};
+
+export const checkVeg = (data) => async (dispatch) => {
+  dispatch({
+    type: Data.isVeg,
+    payload: data,
+  });
+};
+export const checkNonVeg = (data) => async (dispatch)=>{
     dispatch({
-        type:Data.LOAD,
-        payload:data
+        type:Data.isNonVeg,
+        payload: data
     })
 }
+export const sortPrice = (data) => async (dispatch) => {
+  dispatch({
+    type: Data.sortByUp,
+    payload: data.target.value,
+  });
+};
+
