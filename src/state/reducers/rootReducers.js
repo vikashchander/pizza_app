@@ -14,12 +14,13 @@ const rootReducers = (state = initalState, action) => {
       const checker = action.payload;
       console.log(checker);
       let ans = state.data;
+    
       if (checker === "price_down") {
-        ans = state.data.price.sort((a, b) => b - a);
-      } else if (checker === "price_ups") {
-        ans = state.data.price.sort();
-      }
-
+        ans = state.data.sort((a, b) => parseInt(b.price) - parseInt(a.price));
+      } else if (checker === "price_up") {
+        ans = state.data.sort((a,b)=> parseInt(a.price)-parseInt(b.price));
+      }else
+        ans = state.data.sort((a,b)=>a.id-b.id);
       return {
         ...state,
         data: ans,

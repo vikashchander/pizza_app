@@ -15,16 +15,18 @@ import {
   checkNonVeg,
   sortPrice,
 } from "../state/action-creators/action";
-import DropDown from "./DropDown";
+
 function Main() {
   const { data } = useSelector((state) => state);
   const [veg, setVeg] = useState(false);
   const [nonVeg, setNonVeg] = useState(false);
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState("sort");
   const dispatch = useDispatch();
   function handleCheckBoxVeg() {
-    setVeg((d) => !d);
-    dispatch(checkVeg(veg));
+    setVeg((d) => {
+      dispatch(checkVeg(veg));
+      return !d;
+    });
   }
   function handleCheckBoxNonVeg() {
     setNonVeg((val) => !val);
@@ -33,8 +35,10 @@ function Main() {
 
   function handlePrice(e) {
     e.preventDefault();
-    setPrice(e.target.value);
-    console.log(price);
+    setPrice((d) => {
+      return e.target.value;
+    });
+    console.log(e.target.value);
     dispatch(sortPrice(e.target.value));
   }
   const result = data.map(
@@ -78,16 +82,16 @@ function Main() {
           checked={veg}
           onChange={handleCheckBoxVeg}
         />
-         <select
-          class="form-select"
+        <select
+          className="form-select"
           value={price}
           onChange={(e) => handlePrice(e)}
         >
-          <option value="" disabled>
+          <option value="sort" disabled>
             Sort
           </option>
-          <option value="price_up">Price Up</option>
-          <option value="price_down">Price Down</option>
+          <option value="price_up">Lowest Price</option>
+          <option value="price_down">Highest Price</option>
           <option value="reset">Reset</option>
         </select>
       </div>

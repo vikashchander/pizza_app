@@ -22,8 +22,8 @@ export const checkNonVeg = (data) => async (dispatch)=>{
 }
 export const sortPrice = (data) => async (dispatch) => {
   dispatch({
-    type: Data.sortByUp,
-    payload: data.target.value,
+    type: Data.sortData,
+    payload: data,
   });
 };
 
