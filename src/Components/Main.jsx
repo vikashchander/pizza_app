@@ -29,8 +29,10 @@ function Main() {
     });
   }
   function handleCheckBoxNonVeg() {
-    setNonVeg((val) => !val);
-    dispatch(checkNonVeg(nonVeg));
+    setNonVeg((val) => {
+      dispatch(checkNonVeg(nonVeg));
+      return !val;
+    });
   }
 
   function handlePrice(e) {

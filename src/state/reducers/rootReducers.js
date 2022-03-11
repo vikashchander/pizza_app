@@ -2,6 +2,7 @@ import Data from "../constants";
 
 const initalState = {
   data: [],
+  store: [],
 };
 const rootReducers = (state = initalState, action) => {
   switch (action.type) {
@@ -9,28 +10,27 @@ const rootReducers = (state = initalState, action) => {
       return {
         ...state,
         data: action.payload,
+        store: action.payload,
       };
     case Data.sortData:
       const checker = action.payload;
       console.log(checker);
       let ans = state.data;
-    
+
       if (checker === "price_down") {
         ans = state.data.sort((a, b) => parseInt(b.price) - parseInt(a.price));
       } else if (checker === "price_up") {
-        ans = state.data.sort((a,b)=> parseInt(a.price)-parseInt(b.price));
-      }else
-        ans = state.data.sort((a,b)=>a.id-b.id);
+        ans = state.data.sort((a, b) => parseInt(a.price) - parseInt(b.price));
+      } else ans = state.data.sort((a, b) => a.id - b.id);
       return {
         ...state,
         data: ans,
       };
     case Data.isVeg:
-      const checkVeg = action.payload;
-      console.log(checkVeg);
-      const afterVeg = state.data.filter(({ isVeg }) => isVeg !== checkVeg);
-      const resAfterVeg = state.data.filter(({ isVeg }) => isVeg === checkVeg);
-      const res = !checkVeg ? afterVeg : [...afterVeg, ...resAfterVeg];
+      const isCheckVeg = action.payload;
+      console.log(isCheckVeg + " ---");
+      const isVeg = state.data.filter(({ isVeg }) => isVeg !== isCheckVeg);
+      const res = !isCheckVeg ? isVeg : state.store;
       return {
         ...state,
         data: res,
@@ -38,11 +38,8 @@ const rootReducers = (state = initalState, action) => {
     case Data.isNonVeg:
       const checkNonVeg = action.payload;
       console.log(checkNonVeg + " ---");
-      const afterNonVeg = state.data.filter(
-        ({ isVeg }) => isVeg !== checkNonVeg
-      );
-      const resNonVeg = state.data.filter(({ isVeg }) => isVeg === checkNonVeg);
-      const result = !checkNonVeg ? resNonVeg : [...afterNonVeg, ...resNonVeg];
+      const isNonVeg = state.data.filter(({ isVeg }) => isVeg === checkNonVeg);
+      const result = !checkNonVeg ? isNonVeg : state.store;
       return {
         ...state,
         data: result,
